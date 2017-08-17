@@ -54,13 +54,13 @@ _(approx. 1 page)_
 In this final section, summarize a theoretical workflow for approaching a solution given the problem. Provide thorough discussion for what strategies you may consider employing, what analysis of the data might be required before being used, or which algorithms will be considered for your implementation. The workflow and discussion that you provide should align with the qualities of the previous sections. Additionally, you are encouraged to include small visualizations, pseudocode, or diagrams to aid in describing the project design, but it is not required. The discussion should clearly outline your intended workflow of the capstone project.
 
 This project can be broken down into to several parts.  The goal is to simulate  a micromouse robot that can efficiently solve a maze.  This simulation will have to do several things.
--Take sensor input
--Convert sensor input into a map of the maze
--Decide how to explore the maze
--Build a complete map based on sensor data as it explores
--Convert a planned movement into a rotation and distance command
--Deicde when to reset and begin the second run
--Plan and follow the shortest possible path to the goal
+- Take sensor input
+- Convert sensor input into a map of the maze
+- Decide how to explore the maze
+- Build a complete map based on sensor data as it explores
+- Convert a planned movement into a rotation and distance command
+- Deicde when to reset and begin the second run
+- Plan and follow the shortest possible path to the goal
 
 The final product will be a python class that implements all this functionality.  In addition, it will be useful to visualize both the maze, and the path of the robot as it explores and then solves the maze.  
 
