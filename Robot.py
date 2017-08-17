@@ -33,7 +33,7 @@ class Robot(object):
         self.visited[self.location] += 1
         
         self.goal_bounds = (self.maze_dim//2 - 1, self.maze_dim//2)
-
+        print('init called!  Maze_dim {0}, Goal bounds {1}'.format(maze_dim,self.goal_bounds))
         self.explore = True             #During the first run, we explore
         self.explore_frac = explore_frac
         self.path = []                  #Prior to second run, we determine the

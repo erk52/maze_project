@@ -9,7 +9,7 @@ from Robot import Robot
 import matplotlib.pyplot as plt
 
 
-def run_maze(mazefile, explore_frac=0.66, method='bfs'):
+def run_maze(mazefile, explore_frac=0.66, verbose=True, showplot=True):
     
 
     dir_sensors = {'u': ['l', 'u', 'r'], 'r': ['u', 'r', 'd'],
@@ -34,7 +34,7 @@ def run_maze(mazefile, explore_frac=0.66, method='bfs'):
     runtimes = []
     total_time = 0
     for run in range(2):
-        print("Starting run {}.".format(run))
+        if verbose: print("Starting run {}.".format(run))
 
         # Set the robot in the start position. Note that robot position
         # parameters are independent of the robot itself.
@@ -49,9 +49,9 @@ def run_maze(mazefile, explore_frac=0.66, method='bfs'):
             total_time += 1
             if total_time > max_time:
                 run_active = False
-                print("Allotted time exceeded.")
+                if verbose: print("Allotted time exceeded.")
                 break
-            if run == 1:
+            if run == 0:
                 X.append(robot_pos['location'][0])
                 Y.append(robot_pos['location'][1])
             # provide robot with sensor information, get actions
@@ -61,17 +61,17 @@ def run_maze(mazefile, explore_frac=0.66, method='bfs'):
 
             # check for a reset
             if (rotation, movement) == ('Reset', 'Reset'):
-                print("reset recieved.  Robot actually at ", robot_pos['location'])
+                if verbose: print("reset recieved.  Robot actually at ", robot_pos['location'])
                 if run == 0 and hit_goal:
                     run_active = False
                     runtimes.append(total_time)
-                    print("Ending first run. Starting next run.")
+                    if verbose: print("Ending first run. Starting next run.")
                     break
                 elif run == 0 and not hit_goal:
-                    print("Cannot reset - robot has not hit goal yet.")
+                    if verbose: print("Cannot reset - robot has not hit goal yet.")
                     continue
                 else:
-                    print("Cannot reset on runs after the first.")
+                    if verbose: print("Cannot reset on runs after the first.")
                     continue
 
             # perform rotation
@@ -82,11 +82,11 @@ def run_maze(mazefile, explore_frac=0.66, method='bfs'):
             elif rotation == 0:
                 pass
             else:
-                print("Invalid rotation value, no rotation performed.")
+                if verbose: print("Invalid rotation value, no rotation performed.")
 
             # perform movement
             if abs(movement) > 3:
-                print("Movement limited to three squares in a turn.")
+                if verbose: print("Movement limited to three squares in a turn.")
             movement = max(min(int(movement), 3), -3) # fix to range [-3, 3]
             while movement:
                 if movement > 0:
@@ -95,7 +95,7 @@ def run_maze(mazefile, explore_frac=0.66, method='bfs'):
                         robot_pos['location'][1] += dir_move[robot_pos['heading']][1]
                         movement -= 1
                     else:
-                        print("Movement stopped by wall.")
+                        if verbose: print("Movement stopped by wall.")
                         movement = 0
                 else:
                     rev_heading = dir_reverse[robot_pos['heading']]
@@ -104,7 +104,7 @@ def run_maze(mazefile, explore_frac=0.66, method='bfs'):
                         robot_pos['location'][1] += dir_move[rev_heading][1]
                         movement += 1
                     else:
-                        print("Movement stopped by wall.")
+                        if verbose: print("Movement stopped by wall.")
                         movement = 0
 
             # check for goal entered
@@ -114,27 +114,27 @@ def run_maze(mazefile, explore_frac=0.66, method='bfs'):
                 if run != 0:
                     runtimes.append(total_time - sum(runtimes))
                     run_active = False
-                    print("Goal found; run {} completed!".format(run))
+                    if verbose: print("Goal found; run {} completed!".format(run))
 
     # Report score if robot is successful.
     if len(runtimes) == 2:
-        print("Task complete! Score: {:4.3f}".format(runtimes[1] + train_score_mult*runtimes[0]))
-        print("First run: {0}, second run: {1}".format(runtimes[0], runtimes[1]))
-       
-    plt.figure(figsize=(12,12))
-    for x in range(testmaze.dim):
-        for y in range(testmaze.dim):
-            if not testmaze.is_permissible([x,y], 'up'):
-                plt.plot([x-0.5, x+0.5], [y+0.5, y+0.5], 'k-')
-            if not testmaze.is_permissible([x,y], 'down'):
-                plt.plot([x-0.5, x+0.5], [y-0.5, y-0.5], 'k-')
-            if not testmaze.is_permissible([x,y], 'right'):
-                plt.plot([x+0.5, x+0.5], [y-0.5, y+0.5], 'k-')
-            if not testmaze.is_permissible([x,y], 'left'):
-                plt.plot([x-0.5, x-0.5], [y-0.5, y+0.5], 'k-')
-
-    plt.plot(X,Y, '-o')
-    plt.xlim(-1, testmaze.dim)
-    plt.ylim(-1,testmaze.dim)
+        if verbose: print("Task complete! Score: {:4.3f}".format(runtimes[1] + train_score_mult*runtimes[0]))
+        if verbose: print("First run: {0}, second run: {1}".format(runtimes[0], runtimes[1]))
+    if showplot:
+        plt.figure(figsize=(12,12))
+        for x in range(testmaze.dim):
+            for y in range(testmaze.dim):
+                if not testmaze.is_permissible([x,y], 'up'):
+                    plt.plot([x-0.5, x+0.5], [y+0.5, y+0.5], 'k-')
+                if not testmaze.is_permissible([x,y], 'down'):
+                    plt.plot([x-0.5, x+0.5], [y-0.5, y-0.5], 'k-')
+                if not testmaze.is_permissible([x,y], 'right'):
+                    plt.plot([x+0.5, x+0.5], [y-0.5, y+0.5], 'k-')
+                if not testmaze.is_permissible([x,y], 'left'):
+                    plt.plot([x-0.5, x-0.5], [y-0.5, y+0.5], 'k-')
+    
+        plt.plot(X,Y, '-o')
+        plt.xlim(-1, testmaze.dim)
+        plt.ylim(-1,testmaze.dim)
     
     return runtimes[1] + train_score_mult*runtimes[0]
