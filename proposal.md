@@ -1,5 +1,5 @@
 # Machine Learning Engineer Nanodegree
-## Capstone Proposal
+## Capstone Proposal - Robot Motion Planning
 Edward Kish
 August 18th, 2017
 
