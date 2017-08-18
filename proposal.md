@@ -6,8 +6,6 @@ August 18th, 2017
 ## Proposal
 ### Domain Background
 
-In this section, provide brief details on the background information of the domain from which the project is proposed. Historical information relevant to the project should be included. It should be clear how or why a problem in the domain can or should be solved. Related academic research should be appropriately cited in this section, including why that research is relevant. Additionally, a discussion of your personal motivation for investigating a particular problem in the domain is encouraged but not required.
-
 In order for a robot to move around in its environment, it needs to do several things.  It must:
 - Track its own position.
 - Translate sensor data into a map of its surroundings.
@@ -20,8 +18,6 @@ Additionally, if the area is not already mapped out, the robot must explore the 
 The problem here is to implement an algorithm that will allow the simulated micromouse robot to solve the maze as quickly as possible.  The robot gets two runs: one in which to explore the maze and determine an optimal route, and a second run in which to move from the starting location to the goal in the shortest number of steps.  The score will be the number of steps required to reach the goal in the second run plus 1/30th of the number of steps used to explore the maze in the first run.  The simulated robot should be able to solve any arbitrary maze presented to it.
 
 ### Datasets and Inputs
-
-In this section, the dataset(s) and/or input(s) being considered for the project should be thoroughly described, such as how they relate to the problem and why they should be used. Information such as how the dataset or input is (was) obtained, and the characteristics of the dataset or input, should be included with relevant references and citations as necessary It should be clear how the dataset(s) or input(s) will be used in the project and whether their use is appropriate given the context of the problem.
 
 The input data for this project takes the form of a maze.  In micromouse competitions, mazes are 16x16 squares in size.  The test mazes provided here are 12x12 and 16x16 in size, but mazes of any arbitrary size are possible.  It will be desirable to generate more testing mazes with specific features to test the performance of the simulated robot.  
 
